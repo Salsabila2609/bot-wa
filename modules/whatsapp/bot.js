@@ -1,6 +1,10 @@
 const { Client, LocalAuth } = require('whatsapp-web.js');
 const qrcode = require('qrcode-terminal');
 const handlers = require('./handlers');
+
+// Konfigurasi Chrome path
+const executablePath = process.env.CHROME_BIN || undefined;
+
 const client = new Client({
   puppeteer: {
     headless: true,
@@ -12,12 +16,20 @@ const client = new Client({
       '--no-first-run',
       '--no-zygote',
       '--disable-gpu',
-      '--single-process',
-      '--disable-extensions'
+      '--single-process'
     ],
-    // Hapus executablePath jika menggunakan container standar
+    executablePath
   },
-  authTimeoutMs: 120000  // Tingkatkan timeout lebih lama
+  authTimeoutMs: 120000
+});
+
+// Tambahkan error handler
+process.on('unhandledRejection', (reason, promise) => {
+  console.error('Unhandled Rejection at:', promise, 'reason:', reason);
+  console.log('Mencoba restart client...');
+  setTimeout(() => {
+    client.initialize();
+  }, 10000);
 });
 
 
