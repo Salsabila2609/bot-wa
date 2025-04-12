@@ -1,0 +1,4 @@
+2025/04/12-11:00:25.982 4ca8 Reusing MANIFEST C:\Users\etha\Documents\KULIAH\SEMESTER 6\CAPSTONE\tesbot-ini ketiga\.wwebjs_auth\session\Default\Service Worker\Database/MANIFEST-000001
+2025/04/12-11:00:25.983 4ca8 Recovering log #3
+2025/04/12-11:00:25.983 4ca8 (ignoring error) C:\Users\etha\Documents\KULIAH\SEMESTER 6\CAPSTONE\tesbot-ini ketiga\.wwebjs_auth\session\Default\Service Worker\Database/000003.log: dropping 4776 bytes; Corruption: checksum mismatch
+2025/04/12-11:00:25.984 4ca8 Reusing old log C:\Users\etha\Documents\KULIAH\SEMESTER 6\CAPSTONE\tesbot-ini ketiga\.wwebjs_auth\session\Default\Service Worker\Database/000003.log 

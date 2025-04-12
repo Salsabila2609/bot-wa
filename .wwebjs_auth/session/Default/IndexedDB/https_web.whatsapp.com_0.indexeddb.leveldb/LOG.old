@@ -1,0 +1,19 @@
+2025/04/12-11:00:27.473 1830 Reusing MANIFEST C:\Users\etha\Documents\KULIAH\SEMESTER 6\CAPSTONE\tesbot-ini ketiga\.wwebjs_auth\session\Default\IndexedDB\https_web.whatsapp.com_0.indexeddb.leveldb/MANIFEST-000001
+2025/04/12-11:00:27.474 1830 Recovering log #232
+2025/04/12-11:00:27.477 1830 Reusing old log C:\Users\etha\Documents\KULIAH\SEMESTER 6\CAPSTONE\tesbot-ini ketiga\.wwebjs_auth\session\Default\IndexedDB\https_web.whatsapp.com_0.indexeddb.leveldb/000232.log 
+2025/04/12-11:00:27.477 1830 Delete type=2 #229
+2025/04/12-11:00:27.477 1830 Delete type=2 #230
+2025/04/12-11:00:27.477 1830 Delete type=2 #231
+2025/04/12-11:00:27.477 1830 Delete type=2 #233
+2025/04/12-11:00:28.614 4ca8 Level-0 table #238: started
+2025/04/12-11:00:28.624 4ca8 Level-0 table #238: 32989 bytes OK
+2025/04/12-11:00:28.627 4ca8 Delete type=0 #232
+2025/04/12-11:00:28.629 4ca8 Manual compaction at level-0 from '\x00G\x00\x00\x00' @ 72057594037927935 : 1 .. '\x00H\x00\x00\x00' @ 0 : 0; will stop at (end)
+2025/04/12-11:00:32.185 2ffc Compacting 1@1 + 2@2 files
+2025/04/12-11:00:32.402 2ffc Generated table #239@1: 74863 keys, 2250761 bytes
+2025/04/12-11:00:32.578 2ffc Generated table #240@1: 40302 keys, 2025136 bytes
+2025/04/12-11:00:32.578 2ffc Compacted 1@1 + 2@2 files => 4275897 bytes
+2025/04/12-11:00:32.579 2ffc compacted to: files[ 0 0 2 0 0 0 0 ]
+2025/04/12-11:00:32.579 2ffc Delete type=2 #234
+2025/04/12-11:00:32.579 2ffc Delete type=2 #235
+2025/04/12-11:00:32.580 2ffc Delete type=2 #238

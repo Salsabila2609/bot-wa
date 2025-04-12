@@ -1,0 +1,4 @@
+2025/04/12-11:05:36.332 3294 Reusing MANIFEST C:\Users\etha\Documents\KULIAH\SEMESTER 6\CAPSTONE\tesbot-ini ketiga\.wwebjs_auth\session\Default\Service Worker\Database/MANIFEST-000001
+2025/04/12-11:05:36.332 3294 Recovering log #3
+2025/04/12-11:05:36.333 3294 (ignoring error) C:\Users\etha\Documents\KULIAH\SEMESTER 6\CAPSTONE\tesbot-ini ketiga\.wwebjs_auth\session\Default\Service Worker\Database/000003.log: dropping 5922 bytes; Corruption: checksum mismatch
+2025/04/12-11:05:36.333 3294 Reusing old log C:\Users\etha\Documents\KULIAH\SEMESTER 6\CAPSTONE\tesbot-ini ketiga\.wwebjs_auth\session\Default\Service Worker\Database/000003.log 
