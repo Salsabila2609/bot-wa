@@ -6,10 +6,7 @@ let messageHandler = null;
 
 // In bot.js
 const client = new Client({
-  authStrategy: new LocalAuth({ 
-    dataPath: './.wwebjs_auth',  
-    clientId: 'procurement-bot' // Use a fixed client ID
-  }),
+  authStrategy: new LocalAuth({ dataPath: './.wwebjs_auth' }),
   puppeteer: {
     headless: true,
     executablePath: process.env.PUPPETEER_EXECUTABLE_PATH || '/usr/bin/chromium',
