@@ -1,6 +1,6 @@
 const sheetsClient = require('./client');
 const mqttClient = require('../mqtt/client');
-const notificationService = require('../../whatsapp/handlers');
+const notificationService = require('../../services/notification');
 
 async function addNewRequest(requestData) {
   try {

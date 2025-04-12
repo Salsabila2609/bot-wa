@@ -34,6 +34,29 @@ async function notifyKadep(data) {
     return false;
   }
 }
+async function notifyBendaharaForProcessing(ticketNumber, ticketData) {
+  const bendaharaNumber = process.env.BENDAHARA_NUMBER;
+  if (!bendaharaNumber) return;
+
+  const notificationMessage = 
+    `🔔 *PERMINTAAN UNTUK DIPROSES*\n\n` +
+    `Nomor Tiket: *${ticketNumber}*\n` +
+    `Dari: ${ticketData.senderName} (${ticketData.senderNumber})\n` +
+    `Permintaan: ${ticketData.goodsName}\n` +
+    `Jumlah: ${ticketData.quantity}\n` +
+    `Link: ${ticketData.link || '-'}\n` +
+    `Alasan: ${ticketData.reason}\n\n` +
+    `Balas dengan:\n\n` +
+    `*1 ${ticketNumber}* (belum diproses)\n` +
+    `*2 ${ticketNumber} [alasan]* (sedang diproses)\n` +
+    `*3 ${ticketNumber} [alasan]* (sudah diproses)\n\n` +
+    `Contoh:\n` +
+    `*2 ${ticketNumber} sedang dicari vendor terbaik*`;
+
+  const botModule = require('./bot');
+  await botModule.sendMessage(bendaharaNumber, notificationMessage);
+  userStates[bendaharaNumber] = { ticketNumber };
+}
 
 // Notify Bendahara about an approved request (by Kadep)
 async function notifyBendahara(data) {
@@ -124,5 +147,6 @@ async function notifyRequester(data) {
 module.exports = {
   notifyKadep,
   notifyBendahara,
-  notifyRequester
+  notifyRequester,
+  notifyBendaharaForProcessing
 };
