@@ -3,7 +3,6 @@ dotenv.config();
 
 // Import modules
 const whatsappBot = require('./modules/whatsapp/bot');
-const handlers = require('./modules/whatsapp/handlers');
 const mqttClient = require('./modules/mqtt/client');
 const sheetsClient = require('./modules/sheets/client');
 
@@ -15,6 +14,7 @@ mqttClient.connect();
 console.log("Memulai inisialisasi client WhatsApp...");
 sheetsClient.initialize();
 console.log("Inisialisasi selesai dipanggil!");
+
 
 console.log('Sistem Pengadaan Barang dimulai...');
 
@@ -29,8 +29,6 @@ server.listen(8000, () => {
   console.log('Health check server running on port 8000');
 });
 
-
-whatsappBot.setMessageHandler(handlers.handleMessage);
 
 // Handle process termination
 process.on('SIGINT', async () => {

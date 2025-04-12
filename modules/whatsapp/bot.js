@@ -4,7 +4,6 @@ const handlers = require('./handlers');
 const puppeteer = require('puppeteer-core');
 let messageHandler = null;
 
-// In bot.js
 const client = new Client({
   authStrategy: new LocalAuth({ dataPath: './.wwebjs_auth' }),
   puppeteer: {
@@ -16,46 +15,17 @@ const client = new Client({
       '--disable-dev-shm-usage',
       '--disable-accelerated-2d-canvas',
       '--disable-gpu',
-      '--disable-extensions',
-      '--disable-component-extensions-with-background-pages',
-      '--disable-default-apps',
-      '--mute-audio',
-      '--no-default-browser-check',
-      '--no-first-run',
-      '--disable-backgrounding-occluded-windows',
-      '--disable-renderer-backgrounding',
-      '--disable-background-timer-throttling',
-      '--disable-background-networking',
-      '--disable-features=TranslateUI',
-      '--disable-sync',
-      '--disable-notifications',
-      '--single-process', // This can help with memory issues
-      '--memory-pressure-off',
-      '--js-flags="--max-old-space-size=128"' // Reduce memory used by JS
+      '--window-size=1920x1080',
+      // Add these new arguments
+      '--disable-features=site-per-process',
+      '--disable-web-security',
+      '--disable-features=IsolateOrigins',
+      '--disable-site-isolation-trials',
+      '--single-process' // This might help with memory issues
     ]
   }
 });
 
-// Add memory management helpers
-function logMemoryUsage() {
-  const used = process.memoryUsage();
-  console.log('Memory usage:');
-  for (const key in used) {
-    console.log(`${key}: ${Math.round(used[key] / 1024 / 1024 * 100) / 100} MB`);
-  }
-}
-
-// Log memory usage periodically
-setInterval(logMemoryUsage, 60000);
-
-// Add this to help with memory issues
-process.on('memoryUsage', () => {
-  logMemoryUsage();
-  if (global.gc) {
-    console.log('Forcing garbage collection');
-    global.gc();
-  }
-});
 // Set the handler later
 function setMessageHandler(handler) {
   messageHandler = handler;

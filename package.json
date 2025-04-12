@@ -12,11 +12,13 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "@whiskeysockets/baileys": "^6.7.16",
     "dotenv": "^16.4.7",
     "express": "^5.1.0",
     "google-auth-library": "^9.15.1",
     "google-spreadsheet": "^4.1.4",
     "mqtt": "^5.10.4",
+    "pino": "^9.6.0",
     "puppeteer": "^24.6.1",
     "qrcode-terminal": "^0.12.0",
     "whatsapp-web.js": "^1.26.0"
