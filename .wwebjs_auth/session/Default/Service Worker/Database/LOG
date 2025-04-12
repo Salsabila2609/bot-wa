@@ -1,4 +1,0 @@
-2025/04/12-19:32:10.049 7810 Reusing MANIFEST D:\Downloads\tesbot\.wwebjs_auth\session\Default\Service Worker\Database/MANIFEST-000001
-2025/04/12-19:32:10.049 7810 Recovering log #3
-2025/04/12-19:32:10.050 7810 (ignoring error) D:\Downloads\tesbot\.wwebjs_auth\session\Default\Service Worker\Database/000003.log: dropping 8238 bytes; Corruption: checksum mismatch
-2025/04/12-19:32:10.050 7810 Reusing old log D:\Downloads\tesbot\.wwebjs_auth\session\Default\Service Worker\Database/000003.log 

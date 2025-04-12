@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "node --max-old-space-size=200 index.js",
+    "start": "NODE_OPTIONS=--openssl-legacy-provider node index.js",
     "dev": "nodemon index.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
@@ -12,15 +12,14 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "@whiskeysockets/baileys": "^6.7.16",
+    "@hapi/boom": "^10.0.1",
+    "@whiskeysockets/baileys": "^6.5.0",
     "dotenv": "^16.4.7",
     "express": "^5.1.0",
     "google-auth-library": "^9.15.1",
     "google-spreadsheet": "^4.1.4",
     "mqtt": "^5.10.4",
-    "pino": "^9.6.0",
     "puppeteer": "^24.6.1",
-    "qrcode-terminal": "^0.12.0",
-    "whatsapp-web.js": "^1.26.0"
+    "qrcode-terminal": "^0.12.0"
   }
 }

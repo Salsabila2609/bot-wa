@@ -1,3 +1,4 @@
+// handlers.js
 const ticketingService = require('../../services/ticketing');
 const mqttClient = require('../mqtt/client');
 const sheetsOperations = require('../sheets/operations');
@@ -11,9 +12,10 @@ const COMMANDS = {
 
 const userStates = {}; // Menyimpan state pengguna berdasarkan nomor pengirim
 
-async function handleMessage(client, msg) {
-  const senderNumber = msg.from.replace('@c.us', '');
+async function handleMessage(sock, msg) {
+  const senderNumber = msg.from.split('@')[0];
   const messageBody = msg.body.trim();
+  
   // Jika pengguna mengirim /request
   if (messageBody === COMMANDS.REQUEST) {
     // Mulai alur baru dengan format baris
@@ -243,22 +245,22 @@ async function handleMessage(client, msg) {
   }
 
   if (messageBody.startsWith(COMMANDS.CHECK)) {
-    await handleCheckCommand(client, msg, senderNumber, messageBody);
+    await handleCheckCommand(sock, msg, senderNumber, messageBody);
     return;
   }
 
   if (messageBody.startsWith(COMMANDS.HELP)) {
-    await handleHelpCommand(client, msg);
+    await handleHelpCommand(sock, msg);
     return;
   }
 
   if (/^\d+$/.test(messageBody)) {
-    await handleTicketCheck(client, msg, messageBody);
+    await handleTicketCheck(sock, msg, messageBody);
     return;
   }
 }
 
-async function handleCheckCommand(client, msg, senderNumber, messageBody) {
+async function handleCheckCommand(sock, msg, senderNumber, messageBody) {
   try {
     const parts = messageBody.split(' ');
     if (parts.length !== 2) {
@@ -269,7 +271,7 @@ async function handleCheckCommand(client, msg, senderNumber, messageBody) {
     }
 
     const ticketNumber = parts[1].trim();
-    await handleTicketCheck(client, msg, ticketNumber);
+    await handleTicketCheck(sock, msg, ticketNumber);
     
   } catch (error) {
     console.error('Error handling check command:', error);
@@ -277,7 +279,7 @@ async function handleCheckCommand(client, msg, senderNumber, messageBody) {
   }
 }
 
-async function handleTicketCheck(client, msg, ticketNumber) {
+async function handleTicketCheck(sock, msg, ticketNumber) {
   try {
     const ticketData = await sheetsOperations.getTicketData(ticketNumber);
     
@@ -338,7 +340,7 @@ async function handleTicketCheck(client, msg, ticketNumber) {
 }
 
 // Handle help command
-async function handleHelpCommand(client, msg) {
+async function handleHelpCommand(sock, msg) {
   const helpMessage = 
     `🔹 *PANDUAN PENGGUNAAN BOT PENGADAAN BARANG* 🔹\n\n` +
     `Berikut adalah perintah-perintah yang tersedia:\n\n` +
