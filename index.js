@@ -11,21 +11,12 @@ whatsappBot.initialize();
 
 // Connect to MQTT broker
 mqttClient.connect();
-
-// Initialize Google Sheets connection
+console.log("Memulai inisialisasi client WhatsApp...");
 sheetsClient.initialize();
+console.log("Inisialisasi selesai dipanggil!");
+
 
 console.log('Sistem Pengadaan Barang dimulai...');
-
-// Di file index.js atau file utama
-process.on('unhandledRejection', (reason, promise) => {
-  console.error('Unhandled Rejection at:', promise, 'reason:', reason);
-  // Coba lakukan recovery
-  console.log('Mencoba restart bot...');
-  setTimeout(() => {
-    bot.initialize();
-  }, 10000);
-});
 
 // Handle process termination
 process.on('SIGINT', async () => {
