@@ -38,19 +38,26 @@ function initialize() {
   return client;
 }
 
-// Function to send a message to a specific number
+function withTimeout(promise, ms = 10000) {
+  const timeout = new Promise((_, reject) =>
+    setTimeout(() => reject(new Error("Timeout saat kirim pesan")), ms)
+  );
+  return Promise.race([promise, timeout]);
+}
+
 async function sendMessage(to, message) {
-    try {
-      console.log(`Mencoba mengirim pesan ke ${to}...`);
-      const formattedNumber = to.includes('@c.us') ? to : `${to}@c.us`;
-      await client.sendMessage(formattedNumber, message);
-      console.log(`Pesan terkirim ke ${to}`);
-      return true;
-    } catch (error) {
-      console.error(`Gagal mengirim pesan ke ${to}:`, error);
-      return false;
-    }
+  try {
+    console.log(`Mencoba mengirim pesan ke ${to}...`);
+    const formattedNumber = to.includes('@c.us') ? to : `${to}@c.us`;
+    await withTimeout(client.sendMessage(formattedNumber, message), 10000); // 10 detik timeout
+    console.log(`Pesan terkirim ke ${to}`);
+    return true;
+  } catch (error) {
+    console.error(`Gagal mengirim pesan ke ${to}:`, error.message);
+    return false;
   }
+}
+
 
 // Function to shutdown the bot gracefully
 async function shutdown() {
