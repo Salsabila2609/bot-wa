@@ -24,3 +24,14 @@ process.on('SIGINT', async () => {
   mqttClient.disconnect();
   process.exit(0);
 });
+
+// Tambahan untuk health check Koyeb
+const http = require('http');
+const PORT = process.env.PORT || 8000;
+
+http.createServer((req, res) => {
+  res.writeHead(200);
+  res.end('Bot is running!');
+}).listen(PORT, () => {
+  console.log(`Server listening on port ${PORT}`);
+});
