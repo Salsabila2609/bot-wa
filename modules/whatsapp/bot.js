@@ -3,12 +3,14 @@ const qrcode = require('qrcode-terminal');
 const handlers = require('./handlers');
 const puppeteer = require('puppeteer-core');
 
+
+
 const client = new Client({
-  authStrategy: new LocalAuth({
-    dataPath: './.wwebjs_auth'
+  authStrategy: new LocalAuth({ 
+    dataPath: './.wwebjs_auth' // pastikan folder ini ikut ke Koyeb
   }),
   puppeteer: {
-    executablePath: '/usr/bin/google-chrome', // langsung hardcoded path-nya
+    executablePath: puppeteer.executablePath(),
     headless: true,
     args: [
       '--no-sandbox',
@@ -20,6 +22,8 @@ const client = new Client({
     ]
   }
 });
+
+
 function initialize() {
   client.on('qr', (qr) => {
     console.log('QR Code diterima, silahkan scan dengan WhatsApp Anda:');

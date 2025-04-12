@@ -1,4 +1,4 @@
-FROM node:18-bullseye
+FROM ghcr.io/puppeteer/puppeteer:latest
 
 # Install Chromium dan dependencies penting
 RUN apt-get update && \
