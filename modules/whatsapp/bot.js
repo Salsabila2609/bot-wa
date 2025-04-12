@@ -4,8 +4,12 @@ const handlers = require('./handlers');
 const puppeteer = require('puppeteer-core');
 let messageHandler = null;
 
+// In bot.js
 const client = new Client({
-  authStrategy: new LocalAuth({ dataPath: './.wwebjs_auth' }),
+  authStrategy: new LocalAuth({ 
+    dataPath: './.wwebjs_auth',  
+    clientId: 'procurement-bot' // Use a fixed client ID
+  }),
   puppeteer: {
     headless: true,
     executablePath: process.env.PUPPETEER_EXECUTABLE_PATH || '/usr/bin/chromium',
@@ -15,17 +19,46 @@ const client = new Client({
       '--disable-dev-shm-usage',
       '--disable-accelerated-2d-canvas',
       '--disable-gpu',
-      '--window-size=1920x1080',
-      // Add these new arguments
-      '--disable-features=site-per-process',
-      '--disable-web-security',
-      '--disable-features=IsolateOrigins',
-      '--disable-site-isolation-trials',
-      '--single-process' // This might help with memory issues
+      '--disable-extensions',
+      '--disable-component-extensions-with-background-pages',
+      '--disable-default-apps',
+      '--mute-audio',
+      '--no-default-browser-check',
+      '--no-first-run',
+      '--disable-backgrounding-occluded-windows',
+      '--disable-renderer-backgrounding',
+      '--disable-background-timer-throttling',
+      '--disable-background-networking',
+      '--disable-features=TranslateUI',
+      '--disable-sync',
+      '--disable-notifications',
+      '--single-process', // This can help with memory issues
+      '--memory-pressure-off',
+      '--js-flags="--max-old-space-size=128"' // Reduce memory used by JS
     ]
   }
 });
 
+// Add memory management helpers
+function logMemoryUsage() {
+  const used = process.memoryUsage();
+  console.log('Memory usage:');
+  for (const key in used) {
+    console.log(`${key}: ${Math.round(used[key] / 1024 / 1024 * 100) / 100} MB`);
+  }
+}
+
+// Log memory usage periodically
+setInterval(logMemoryUsage, 60000);
+
+// Add this to help with memory issues
+process.on('memoryUsage', () => {
+  logMemoryUsage();
+  if (global.gc) {
+    console.log('Forcing garbage collection');
+    global.gc();
+  }
+});
 // Set the handler later
 function setMessageHandler(handler) {
   messageHandler = handler;
@@ -117,17 +150,23 @@ setInterval(async () => {
 
 // Function to send a message to a specific number
 async function sendMessage(to, message) {
-    try {
-      console.log(`Mencoba mengirim pesan ke ${to}...`);
-      const formattedNumber = to.includes('@c.us') ? to : `${to}@c.us`;
-      await client.sendMessage(formattedNumber, message);
-      console.log(`Pesan terkirim ke ${to}`);
-      return true;
-    } catch (error) {
-      console.error(`Gagal mengirim pesan ke ${to}:`, error);
-      return false;
+  try {
+    console.log(`Mencoba mengirim pesan ke ${to}...`);
+    const formattedNumber = to.includes('@c.us') ? to : `${to}@c.us`;
+    await client.sendMessage(formattedNumber, message);
+    console.log(`Pesan terkirim ke ${to}`);
+    
+    // Force garbage collection if available (Node with --expose-gc flag)
+    if (global.gc) {
+      global.gc();
     }
+    
+    return true;
+  } catch (error) {
+    console.error(`Gagal mengirim pesan ke ${to}:`, error);
+    return false;
   }
+}
 
 // Function to shutdown the bot gracefully
 async function shutdown() {
