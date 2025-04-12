@@ -6,11 +6,10 @@ const puppeteer = require('puppeteer-core');
 
 
 const client = new Client({
-  authStrategy: new LocalAuth({ 
-    dataPath: './.wwebjs_auth' // pastikan folder ini ikut ke Koyeb
-  }),
+  authStrategy: new LocalAuth({ dataPath: './.wwebjs_auth' }),
   puppeteer: {
     headless: true,
+    executablePath: process.env.PUPPETEER_EXECUTABLE_PATH || '/usr/bin/chromium',
     args: [
       '--no-sandbox',
       '--disable-setuid-sandbox',
@@ -21,6 +20,7 @@ const client = new Client({
     ]
   }
 });
+
 
 
 function initialize() {
