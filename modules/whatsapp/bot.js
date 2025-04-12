@@ -2,14 +2,16 @@ const { Client, LocalAuth } = require('whatsapp-web.js');
 const qrcode = require('qrcode-terminal');
 const handlers = require('./handlers');
 
-const puppeteer = require('puppeteer');  // Gunakan puppeteer standar
-
 const client = new Client({
-  authStrategy: new LocalAuth(),
   puppeteer: {
-    executablePath: puppeteer.executablePath(),  // Tentukan path ke executable Chrome
     headless: true,
-    args: ['--no-sandbox', '--disable-setuid-sandbox'],
+    args: [
+      '--no-sandbox',
+      '--disable-setuid-sandbox',
+      '--disable-dev-shm-usage',
+      '--single-process'
+    ],
+    executablePath: process.env.CHROMIUM_PATH || '/usr/bin/chromium'
   }
 });
 
