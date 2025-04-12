@@ -1,6 +1,5 @@
 const sheetsClient = require('./client');
 const mqttClient = require('../mqtt/client');
-const notificationService = require('../../services/notification');
 
 async function addNewRequest(requestData) {
   try {
@@ -149,13 +148,11 @@ async function handleStatusChange(ticketNumber, updates, ticketData) {
       switch (updates.status) {
         case 'PENDING_PROCESS':
           notificationType = 'KADEP_APPROVED';
-          await notificationService.notifyBendaharaForProcessing(notificationData);
           break;
         
         case 'REJECTED':
           notificationType = 'KADEP_REJECTED';
           notificationData.reason = ticketData.reasonKadep;
-          await notificationService.notifyRequesterRejected(notificationData);
           break;
       }
     }
@@ -164,7 +161,6 @@ async function handleStatusChange(ticketNumber, updates, ticketData) {
       switch (updates.statusBendahara) {
         case 'PROCESSED':
           notificationType = 'BENDAHARA_PROCESSED';
-          await notificationService.notifyRequesterProcessed(notificationData);
           break;
       }
     }
@@ -237,18 +233,15 @@ async function processUpdatedRow(row) {
     };
 
     if (status === 'PENDING_PROCESS' && !row.kadepNotified) {
-      await notificationService.notifyBendaharaForProcessing(notificationData);
       row.set('kadepNotified', 'YES');
       await row.save();
     } 
     else if (status === 'REJECTED' && !row.rejectNotified) {
       notificationData.reason = row.get('reasonKadep') || row._rawData[10];
-      await notificationService.notifyRequesterRejected(notificationData);
       row.set('rejectNotified', 'YES');
       await row.save();
     }
     else if (statusBendahara === 'PROCESSED' && !row.processedNotified) {
-      await notificationService.notifyRequesterProcessed(notificationData);
       row.set('processedNotified', 'YES');
       await row.save();
     }

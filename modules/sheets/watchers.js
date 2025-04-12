@@ -1,5 +1,4 @@
 const sheetsClient = require('./client');
-const notificationService = require('../../services/notification');
 
 async function initialize() {
   try {
@@ -64,11 +63,7 @@ async function processUpdatedRow(row) {
     switch (row.status) {
       case 'PENDING_APPROVAL_1':
         if (row.kadepNotified !== 'YES') {
-          await notificationService.notifyKadep({
-            ticketNumber: row.ticketNumber,
-            request: row.request,
-            senderNumber: row.senderNumber
-          });
+
           row.kadepNotified = 'YES';
           await row.save();
         }
@@ -76,11 +71,7 @@ async function processUpdatedRow(row) {
       
       case 'PENDING_APPROVAL_2':
         if (row.bendaharaNotified !== 'YES') {
-          await notificationService.notifyBendahara({
-            ticketNumber: row.ticketNumber,
-            request: row.request,
-            senderNumber: row.senderNumber
-          });
+
           
           row.bendaharaNotified = 'YES';
           await row.save();
@@ -91,14 +82,7 @@ async function processUpdatedRow(row) {
       case 'REJECTED_1':
       case 'REJECTED_2':
         if (row.requesterNotified !== 'YES') {
-          await notificationService.notifyRequester({
-            ticketNumber: row.ticketNumber,
-            status: row.status,
-            request: row.request,
-            reasonKadep: row.reasonKadep,
-            reasonBendahara: row.reasonBendahara,
-            senderNumber: row.senderNumber
-          });
+
           
           row.requesterNotified = 'YES';
           await row.save();
