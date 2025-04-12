@@ -1,5 +1,5 @@
 const sheetsClient = require('./client');
-const mqttClient = require('../mqtt/client');
+const { publishNotification } = require('../mqtt/client'); // Pastikan path sesuai
 const notificationService = require('../../services/notification');
 
 async function addNewRequest(requestData) {
@@ -169,13 +169,22 @@ async function handleStatusChange(ticketNumber, updates, ticketData) {
     }
     
     if (notificationType) {
-      mqttClient.publishNotification({
+      // Gunakan fungsi publishNotification yang sudah diimpor
+      await publishNotification({
         type: notificationType,
         ...notificationData
       });
+      
+      console.log(`[MQTT] Notification sent for ticket ${ticketNumber}`);
     }
   } catch (error) {
-    console.error('Gagal menangani perubahan status:', error);
+    console.error('Gagal menangani perubahan status:', {
+      error: error.message,
+      stack: error.stack,
+      ticketNumber,
+      updates
+    });
+    throw error; // Re-throw untuk penanganan di level atas
   }
 }
 
@@ -258,6 +267,7 @@ async function processUpdatedRow(row) {
 module.exports = {
   addNewRequest,
   getTicketData,
+  handleStatusChange,
   updateTicketStatus,
   setupChangeWatcher
 };
