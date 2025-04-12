@@ -1,0 +1,17 @@
+2025/04/12-15:48:48.362 8da8 Reusing MANIFEST D:\Downloads\tesbot\.wwebjs_auth\session\Default\IndexedDB\https_web.whatsapp.com_0.indexeddb.leveldb/MANIFEST-000001
+2025/04/12-15:48:48.363 8da8 Recovering log #253
+2025/04/12-15:48:48.464 8da8 Reusing old log D:\Downloads\tesbot\.wwebjs_auth\session\Default\IndexedDB\https_web.whatsapp.com_0.indexeddb.leveldb/000253.log 
+2025/04/12-15:48:53.323 8da8 Level-0 table #260: started
+2025/04/12-15:48:53.337 8da8 Level-0 table #260: 600058 bytes OK
+2025/04/12-15:48:53.340 8da8 Delete type=0 #253
+2025/04/12-15:48:53.341 8da8 Manual compaction at level-0 from '\x00I\x00\x00\x00' @ 72057594037927935 : 1 .. '\x00J\x00\x00\x00' @ 0 : 0; will stop at (end)
+2025/04/12-15:48:55.931 5af0 Compacting 1@1 + 3@2 files
+2025/04/12-15:48:56.076 5af0 Generated table #261@1: 78766 keys, 2258121 bytes
+2025/04/12-15:48:56.152 5af0 Generated table #262@1: 35277 keys, 2181054 bytes
+2025/04/12-15:48:56.170 5af0 Generated table #263@1: 10969 keys, 204644 bytes
+2025/04/12-15:48:56.170 5af0 Compacted 1@1 + 3@2 files => 4643819 bytes
+2025/04/12-15:48:56.172 5af0 compacted to: files[ 0 0 3 0 0 0 0 ]
+2025/04/12-15:48:56.172 5af0 Delete type=2 #255
+2025/04/12-15:48:56.172 5af0 Delete type=2 #256
+2025/04/12-15:48:56.173 5af0 Delete type=2 #257
+2025/04/12-15:48:56.173 5af0 Delete type=2 #260
