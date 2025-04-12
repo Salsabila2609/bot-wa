@@ -17,6 +17,16 @@ sheetsClient.initialize();
 
 console.log('Sistem Pengadaan Barang dimulai...');
 
+// Di file index.js atau file utama
+process.on('unhandledRejection', (reason, promise) => {
+  console.error('Unhandled Rejection at:', promise, 'reason:', reason);
+  // Coba lakukan recovery
+  console.log('Mencoba restart bot...');
+  setTimeout(() => {
+    bot.initialize();
+  }, 10000);
+});
+
 // Handle process termination
 process.on('SIGINT', async () => {
   console.log('Menutup aplikasi...');

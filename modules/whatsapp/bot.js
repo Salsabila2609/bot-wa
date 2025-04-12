@@ -8,11 +8,16 @@ const client = new Client({
       '--no-sandbox',
       '--disable-setuid-sandbox',
       '--disable-dev-shm-usage',
-      '--single-process'
+      '--disable-accelerated-2d-canvas',
+      '--no-first-run',
+      '--no-zygote',
+      '--disable-gpu',
+      '--single-process',
+      '--disable-extensions'
     ],
-    executablePath: process.env.CHROMIUM_PATH
+    // Hapus executablePath jika menggunakan container standar
   },
-  authTimeoutMs: 60000  // Tambahkan timeout lebih panjang
+  authTimeoutMs: 120000  // Tingkatkan timeout lebih lama
 });
 
 
