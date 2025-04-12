@@ -3,6 +3,7 @@ dotenv.config();
 
 // Import modules
 const whatsappBot = require('./modules/whatsapp/bot');
+const handlers = require('./modules/whatsapp/handlers');
 const mqttClient = require('./modules/mqtt/client');
 const sheetsClient = require('./modules/sheets/client');
 
@@ -28,6 +29,8 @@ server.listen(8000, () => {
   console.log('Health check server running on port 8000');
 });
 
+
+whatsappBot.setMessageHandler(handlers.handleMessage);
 
 // Handle process termination
 process.on('SIGINT', async () => {
