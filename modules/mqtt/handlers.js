@@ -1,5 +1,4 @@
 const sheetsOperations = require('../sheets/operations');
-const notificationService = require('../../services/notification');
 
 // Handle incoming MQTT messages
 async function handleMessage(topic, message) {
