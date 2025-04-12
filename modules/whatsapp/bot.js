@@ -10,7 +10,6 @@ const client = new Client({
     dataPath: './.wwebjs_auth' // pastikan folder ini ikut ke Koyeb
   }),
   puppeteer: {
-    executablePath: puppeteer.executablePath(),
     headless: true,
     args: [
       '--no-sandbox',
