@@ -149,7 +149,6 @@ async function handleStatusChange(ticketNumber, updates, ticketData) {
       switch (updates.status) {
         case 'PENDING_PROCESS':
           notificationType = 'KADEP_APPROVED';
-          await notificationService.notifyBendaharaForProcessing(notificationData);
           break;
         
         case 'REJECTED':
@@ -237,7 +236,6 @@ async function processUpdatedRow(row) {
     };
 
     if (status === 'PENDING_PROCESS' && !row.kadepNotified) {
-      await notificationService.notifyBendaharaForProcessing(notificationData);
       row.set('kadepNotified', 'YES');
       await row.save();
     } 
