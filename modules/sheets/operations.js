@@ -1,6 +1,5 @@
 const sheetsClient = require('./client');
 const mqttClient = require('../mqtt/client');
-const notificationService = require('../../services/notification');
 
 async function addNewRequest(requestData) {
   try {
@@ -149,13 +148,11 @@ async function handleStatusChange(ticketNumber, updates, ticketData) {
       switch (updates.status) {
         case 'PENDING_PROCESS':
           notificationType = 'KADEP_APPROVED';
-          await notificationService.notifyBendaharaForProcessing(notificationData);
           break;
         
         case 'REJECTED':
           notificationType = 'KADEP_REJECTED';
           notificationData.reason = ticketData.reasonKadep;
-          await notificationService.notifyRequesterRejected(notificationData);
           break;
       }
     }
