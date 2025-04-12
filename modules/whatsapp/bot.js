@@ -29,6 +29,22 @@ function initialize() {
     qrcode.generate(qr, { small: true });
   });
 
+  client.on('disconnected', (reason) => {
+    console.log('WhatsApp terputus karena:', reason);
+    console.log('Mencoba menyambung ulang...');
+    client.initialize();
+  });
+  
+  // Tambahkan health check interval
+  setInterval(() => {
+    if (client.info && client.info.wid) {
+      console.log('WhatsApp masih terhubung:', new Date().toISOString());
+    } else {
+      console.log('Status WhatsApp tidak aktif, mencoba reconnect:', new Date().toISOString());
+      client.initialize();
+    }
+  }, 30000); // Setiap 30 detik
+
   client.on('ready', () => {
     console.log('WhatsApp Bot siap digunakan!');
   });
