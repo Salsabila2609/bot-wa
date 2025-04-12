@@ -1,5 +1,5 @@
 const sheetsClient = require('./client');
-const { publishNotification } = require('../mqtt/client'); // Pastikan path sesuai
+const mqttClient = require('../mqtt/client');
 const notificationService = require('../../services/notification');
 
 async function addNewRequest(requestData) {
@@ -149,6 +149,7 @@ async function handleStatusChange(ticketNumber, updates, ticketData) {
       switch (updates.status) {
         case 'PENDING_PROCESS':
           notificationType = 'KADEP_APPROVED';
+          await notificationService.notifyBendaharaForProcessing(notificationData);
           break;
         
         case 'REJECTED':
@@ -169,22 +170,13 @@ async function handleStatusChange(ticketNumber, updates, ticketData) {
     }
     
     if (notificationType) {
-      // Gunakan fungsi publishNotification yang sudah diimpor
-      await publishNotification({
+      mqttClient.publishNotification({
         type: notificationType,
         ...notificationData
       });
-      
-      console.log(`[MQTT] Notification sent for ticket ${ticketNumber}`);
     }
   } catch (error) {
-    console.error('Gagal menangani perubahan status:', {
-      error: error.message,
-      stack: error.stack,
-      ticketNumber,
-      updates
-    });
-    throw error; // Re-throw untuk penanganan di level atas
+    console.error('Gagal menangani perubahan status:', error);
   }
 }
 
@@ -245,6 +237,7 @@ async function processUpdatedRow(row) {
     };
 
     if (status === 'PENDING_PROCESS' && !row.kadepNotified) {
+      await notificationService.notifyBendaharaForProcessing(notificationData);
       row.set('kadepNotified', 'YES');
       await row.save();
     } 
@@ -267,7 +260,6 @@ async function processUpdatedRow(row) {
 module.exports = {
   addNewRequest,
   getTicketData,
-  handleStatusChange,
   updateTicketStatus,
   setupChangeWatcher
 };
