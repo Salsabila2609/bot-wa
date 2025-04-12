@@ -1,0 +1,10 @@
+# Exclude Puppeteer's Chromium binary
+node_modules/puppeteer-core/.local-chromium/
+
+# Exclude WhatsApp Web JS cache/auth
+.wwebjs_auth/
+.wwebjs_cache/
+
+# Default Node.js exclusions
+node_modules/
+.env
