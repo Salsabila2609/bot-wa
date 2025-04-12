@@ -1,7 +1,6 @@
 const { Client, LocalAuth } = require('whatsapp-web.js');
 const qrcode = require('qrcode-terminal');
 const handlers = require('./handlers');
-
 const client = new Client({
   puppeteer: {
     headless: true,
@@ -11,8 +10,9 @@ const client = new Client({
       '--disable-dev-shm-usage',
       '--single-process'
     ],
-    executablePath: process.env.CHROMIUM_PATH || '/usr/bin/chromium'
-  }
+    executablePath: process.env.CHROMIUM_PATH
+  },
+  authTimeoutMs: 60000  // Tambahkan timeout lebih panjang
 });
 
 
