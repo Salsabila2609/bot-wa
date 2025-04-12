@@ -165,12 +165,7 @@ async function handleStatusChange(ticketNumber, updates, ticketData) {
       }
     }
     
-    if (notificationType) {
-      mqttClient.publishNotification({
-        type: notificationType,
-        ...notificationData
-      });
-    }
+
   } catch (error) {
     console.error('Gagal menangani perubahan status:', error);
   }

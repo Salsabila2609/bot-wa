@@ -77,27 +77,7 @@ function publishRequest(requestData) {
   }
 }
 
-// Publish notification to MQTT
-function publishNotification(notificationData) {
-  if (!client || !client.connected) {
-    console.error('MQTT client tidak terhubung');
-    return false;
-  }
-  
-  try {
-    client.publish(
-      process.env.MQTT_TOPIC_NOTIFICATION,
-      JSON.stringify(notificationData),
-      { qos: 1, retain: false }
-    );
-    
-    console.log('Notifikasi dipublikasikan ke MQTT:', notificationData.type);
-    return true;
-  } catch (error) {
-    console.error('Gagal mempublikasikan notifikasi ke MQTT:', error);
-    return false;
-  }
-}
+
 
 // Disconnect from MQTT broker
 function disconnect() {
@@ -110,6 +90,6 @@ function disconnect() {
 module.exports = {
   connect,
   publishRequest,
-  publishNotification,
+
   disconnect
 };

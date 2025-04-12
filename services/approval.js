@@ -38,13 +38,7 @@ async function processKadepApproval(ticketNumber, approved, reason = null) {
     // Update ticket in Google Sheets
     await sheetsOperations.updateTicketStatus(ticketNumber, updates);
     
-    // Publish to MQTT
-    mqttClient.publishNotification({
-      type: 'APPROVAL_1_UPDATED',
-      ticketNumber,
-      approved,
-      reason
-    });
+
     
     return {
       success: true,
@@ -96,13 +90,7 @@ async function processBendaharaApproval(ticketNumber, approved, reason = null) {
     // Update ticket in Google Sheets
     await sheetsOperations.updateTicketStatus(ticketNumber, updates);
     
-    // Publish to MQTT
-    mqttClient.publishNotification({
-      type: 'APPROVAL_2_UPDATED',
-      ticketNumber,
-      approved,
-      reason
-    });
+
     
     return {
       success: true,
