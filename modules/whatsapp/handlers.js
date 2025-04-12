@@ -14,15 +14,29 @@ const userStates = {}; // Menyimpan state pengguna berdasarkan nomor pengirim
 async function handleMessage(client, msg) {
   const senderNumber = msg.from.replace('@c.us', '');
   const messageBody = msg.body.trim();
-
   // Jika pengguna mengirim /request
   if (messageBody === COMMANDS.REQUEST) {
     // Mulai alur baru dengan format baris
     userStates[senderNumber] = { step: 'waitingForCompleteData' };
+    
+    // Bubble chat pertama (contoh)
     await msg.reply(
-      'Silahkan masukkan keterangan barang yang ingin diajukan dengan format:\n\n' +
-      'Nama Lengkap:\nNama Barang:\nJumlah:\nLink:\nAlasan:\n\n' +
-      'Contoh:\nNama Lengkap: John Doe\nNama Barang: Proyektor\nJumlah: 1 unit\nLink: https://tokopedia.com/link-proyektor\nAlasan: Untuk presentasi di ruang rapat'
+      'Contoh request:\n' +
+      'Nama Lengkap: John Doe\n' +
+      'Nama Barang: Proyektor\n' +
+      'Jumlah: 1 unit\n' +
+      'Link: https://tokopedia.com/link-proyektor\n' +
+      'Alasan: Untuk presentasi di ruang rapat\n\n' +
+      'Silahkan masukkan keterangan barang yang ingin diajukan dengan format seperti diatas dengan menyalin pesan dibawah:'
+    );
+    
+    // Bubble chat kedua (template kosong)
+    await msg.reply(
+      'Nama Lengkap:\n' +
+      'Nama Barang:\n' +
+      'Jumlah:\n' +
+      'Link:\n' +
+      'Alasan:'
     );
     return;
   }
