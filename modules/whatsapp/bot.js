@@ -13,34 +13,35 @@ const client = new Client({
 });
 
 
-function initialize() {
-  client.on('qr', (qr) => {
-    console.log('QR Code diterima, silahkan scan dengan WhatsApp Anda:');
-    qrcode.generate(qr, { small: true });
+async function initialize() {
+  return new Promise((resolve, reject) => {
+    client.on('qr', (qr) => {
+      console.log('QR Code diterima, silahkan scan dengan WhatsApp Anda:');
+      qrcode.generate(qr, { small: true });
+    });
+
+    client.on('ready', () => {
+      console.log('WhatsApp Bot siap digunakan!');
+      resolve(); // selesai init
+    });
+
+    client.on('authenticated', () => {
+      console.log('Autentikasi berhasil!');
+    });
+
+    client.on('auth_failure', (msg) => {
+      console.error('Autentikasi gagal:', msg);
+      reject(new Error('Autentikasi gagal'));
+    });
+
+    client.on('message', async (msg) => {
+      await handlers.handleMessage(client, msg);
+    });
+
+    client.initialize();
   });
-
-  client.on('ready', () => {
-    console.log('WhatsApp Bot siap digunakan!');
-  });
-
-  client.on('authenticated', () => {
-    console.log('Autentikasi berhasil!');
-  });
-
-  client.on('auth_failure', (msg) => {
-    console.error('Autentikasi gagal:', msg);
-  });
-
-  // Handle incoming messages
-  client.on('message', async (msg) => {
-    await handlers.handleMessage(client, msg);
-  });
-
-  // Initialize the client
-  client.initialize();
-
-  return client;
 }
+
 
 // Function to send a message to a specific number
 async function sendMessage(to, message) {
