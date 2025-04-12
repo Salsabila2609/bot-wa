@@ -477,5 +477,6 @@ async function notifyRequesterProcessed(ticketNumber, requestData, requesterNumb
 }
 
 module.exports = {
-  handleMessage
+  handleMessage,
+  notifyBendaharaForProcessing
 };
